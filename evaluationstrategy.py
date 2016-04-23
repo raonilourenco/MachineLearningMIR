@@ -42,7 +42,7 @@ def compute_metrics_classifier (classifier, param_grid, X, y, metric = accuracy_
     if(add_features):
         [X_train, X_test] = compute_new_features(X_train,y_train,X_test,y_test)
 
-    grid_search = GridSearchCV(classifier, param_grid = param_grid, cv = cv_parameter_estimation, n_jobs=8)
+    grid_search = GridSearchCV(classifier, param_grid = param_grid, cv = cv_parameter_estimation, n_jobs=-1, verbose = 100)
     grid_search.fit(X_train, y_train) #finding best parameters
 
     y_hat_train = grid_search.predict(X_train)
