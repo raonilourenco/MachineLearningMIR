@@ -7,7 +7,7 @@ if len(sys.argv) != 2:
 else:
     results = []
 
-    for root, dirs, files in os.walk(os.getcwd()):            
+    for root, dirs, files in os.walk(sys.argv[1]):            
         for f in files:                        
             if f.lower().endswith((".json")):
                 fname = os.path.join(root, f)

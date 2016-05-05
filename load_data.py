@@ -53,7 +53,7 @@ def create_feature_table(path, to_ignore):
                 if(not(features_names)):
                     feature_names = keys
                 features.append(feature_values)
-                classes.append(folder.split("/")[1])
+                classes.append(folder.split("/")[-1])
     return (classes, features,feature_names)
 
 
