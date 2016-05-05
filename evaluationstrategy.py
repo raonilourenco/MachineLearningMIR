@@ -33,6 +33,27 @@ def feature_normalization(train, test):
     return train_normalized,test_normalized
 
 
+def evaluate_classifier (classifier, parameters, X, y, metric = accuracy_score, percentage_train = 0.7, add_features=False):
+    nsamples = X.shape[0]
+    nsamples_train = np.floor(percentage_train * nsamples)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=int(nsamples-nsamples_train))
+    X_train, X_test = feature_normalization(X_train, X_test)
+
+    if(add_features):
+        [X_train, X_test] = compute_new_features(X_train,y_train,X_test,y_test)
+
+    classifier.set_params(**parameters)
+
+    classifier.fit(X_train, y_train) #finding best parameters
+
+    y_hat_test = classifier.predict(X_test)
+
+    metric_test = metric(y_test, y_hat_test)
+
+    return(metric_test)
+
+
+
 def compute_metrics_classifier (classifier, param_grid, X, y, metric = accuracy_score, percentage_train = 0.7, cv_parameter_estimation = 3, add_features=False):
     nsamples = X.shape[0]
     nsamples_train = np.floor(percentage_train * nsamples)
