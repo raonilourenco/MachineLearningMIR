@@ -1,7 +1,6 @@
 import json
 import numpy as np
 import matplotlib.pyplot as plt
-import csv
 
 
 def read_everything(filesList):
@@ -23,19 +22,18 @@ if __name__ == "__main__":
     to_do = read_everything(["summary_plots_2_runs.json", "summary_plots_18_runs.json"])
     n_experiments = len(to_do)
     data = []
-    labels = []
+    labels = ["a","b","c","d","e","f"]
     
-    outFile = open("experiments.csv","wb")
-    writer = csv.writer(outFile)
+    
+
+    to_do = [to_do[i] for i in [1,3,0,2,5,4]]
 
     for id_experiment in range(n_experiments):
+        print(to_do[id_experiment]["classifier_name"], to_do[id_experiment]["feature"])
         data.append(to_do[id_experiment]["metric_tests"])
-        labels.append(to_do[id_experiment]["classifier_name"])
-        row = [to_do[id_experiment]["classifier_name"], to_do[id_experiment]["feature"]] + to_do[id_experiment]["metric_tests"]
-        writer.writerow(row)
 
-    outFile.close()
     plt.boxplot(data, labels = labels)
+    plt.savefig("boxplot.pdf",format="pdf")
     plt.show()
 
 
